@@ -9,7 +9,7 @@ the Promises/A+ standard (which should be obvious).
 
 For wrapping Node.js-style functions into functions returing promises, we
 require a `Promise` prototype providing a constructor with the following
-structure: `new Promise(function(resolve, reject) { ... }` in which the function
+structure: `new Promise(function(resolve, reject) { ... })` in which the function
 parameters refer to callbacks that should be called when a promise gets fulfilled
 or rejected.
 
