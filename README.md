@@ -1,4 +1,4 @@
-cb2prom.js
+prom2cb.js
 ==========
 An adapter library converting Node.js-style functions with callbacks into
 functions constructing promises and vice-versa.
@@ -101,7 +101,7 @@ promises through `.then()` function invocations:
     var Promise = require('rsvp').Promise; // We use RSVP to construct promises
     
     /* Wrap the fs.readFile function into a function return a promise */
-    var readFile = cb2prom.promisify(Promise, fs.readFile); 
+    var readFile = prom2cb.promisify(Promise, fs.readFile); 
     
     /* Invoke the function as a promise */
     readFile("hello.txt").then(function(data) {
@@ -113,7 +113,7 @@ promises through `.then()` function invocations:
 Instead of defining and adapting the function first and invoking it later, we
 can also combine these aspects into a one liner:
 
-    cb2prom.promisify(Promise, fs.readFile)("hello.txt").then(function(data) {
+    prom2cb.promisify(Promise, fs.readFile)("hello.txt").then(function(data) {
         console.log("File contents is: "+data);
     }, function(err) {
         console.log("Error opening file: "+err);
