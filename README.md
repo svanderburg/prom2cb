@@ -1,5 +1,3 @@
-prom2cb.js
-==========
 An adapter library converting Node.js-style functions with callbacks into
 functions constructing promises and vice-versa.
 
