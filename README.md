@@ -24,14 +24,18 @@ directory with the NPM package manager by running:
 
 In the code, the module can be imported with:
 
-    var prom2cb = require('prom2cb');
+```javascript
+var prom2cb = require('prom2cb');
+```
 
 Browser
 -------
 For usage in the browser copy `lib/prom2cb.js` into a folder accessible by a web
 page. Then add the following script include to the HTML code of that web page:
 
-    <script type="text/javascript" src="prom2cb.js"></script>
+```html
+<script type="text/javascript" src="prom2cb.js"></script>
+```
 
 Usage
 =====
@@ -47,43 +51,45 @@ result of a promise.
 With this function you can, for example, easily integrate promise-style function
 invocations with a Node.js-function style control flow abstraction function:
 
-    slasp.sequence([
-        function(callback) {
-            prom2cb.chainCallback(Task.sync(), callback);
-        },
-        
-        function(callback) {
-            prom2cb.chainCallback(Task.create({
-                title: "Get some coffee",
-                description: "Get some coffee ASAP"
-            }), callback);
-        },
-        
-        function(callback) {
-            prom2cb.chainCallback(Task.create({
-                title: "Drink coffee",
-                description: "Because I need caffeine"
-            }), callback);
-        },
-        
-        function(callback) {
-            prom2cb.chainCallback(Task.findAll(), callback);
-        },
-        
-        function(callback, tasks) {
-            for(var i = 0; i < tasks.length; i++) {
-                var task = tasks[i];
-                console.log(task.title + ": "+ task.description);
-            }
+```javascript
+slasp.sequence([
+    function(callback) {
+        prom2cb.chainCallback(Task.sync(), callback);
+    },
+    
+    function(callback) {
+        prom2cb.chainCallback(Task.create({
+            title: "Get some coffee",
+            description: "Get some coffee ASAP"
+        }), callback);
+    },
+    
+    function(callback) {
+        prom2cb.chainCallback(Task.create({
+            title: "Drink coffee",
+            description: "Because I need caffeine"
+        }), callback);
+    },
+    
+    function(callback) {
+        prom2cb.chainCallback(Task.findAll(), callback);
+    },
+    
+    function(callback, tasks) {
+        for(var i = 0; i < tasks.length; i++) {
+            var task = tasks[i];
+            console.log(task.title + ": "+ task.description);
         }
-    ], function(err) {
-        if(err) {
-            console.log("An error occured: "+err);
-            process.exit(1);
-        } else {
-            process.exit(0);
-        }
-    });
+    }
+], function(err) {
+    if(err) {
+        console.log("An error occured: "+err);
+        process.exit(1);
+    } else {
+        process.exit(0);
+    }
+});
+```
 
 Converting a Node.js-style function into a function returning a promise
 -----------------------------------------------------------------------
@@ -95,26 +101,30 @@ callback).
 Because the wrapped functions return promises, we can "chain" them to other
 promises through `.then()` function invocations:
 
-    var fs = require('fs');
-    var Promise = require('rsvp').Promise; // We use RSVP to construct promises
-    
-    /* Wrap the fs.readFile function into a function return a promise */
-    var readFile = prom2cb.promisify(Promise, fs.readFile); 
-    
-    /* Invoke the function as a promise */
-    readFile("hello.txt").then(function(data) {
-        console.log("File contents is: "+data);
-    }, function(err) {
-        console.log("Error opening file: "+err);
-    });
+```javascript
+var fs = require('fs');
+var Promise = require('rsvp').Promise; // We use RSVP to construct promises
+
+/* Wrap the fs.readFile function into a function return a promise */
+var readFile = prom2cb.promisify(Promise, fs.readFile);
+
+/* Invoke the function as a promise */
+readFile("hello.txt").then(function(data) {
+    console.log("File contents is: "+data);
+}, function(err) {
+    console.log("Error opening file: "+err);
+});
+```
 
 Instead of defining and adapting the function first and invoking it later, we
 can also combine these aspects into a one liner:
 
-    prom2cb.promisify(Promise, fs.readFile)("hello.txt").then(function(data) {
-        console.log("File contents is: "+data);
-    }, function(err) {
-        console.log("Error opening file: "+err);
-    });
+```javascript
+prom2cb.promisify(Promise, fs.readFile)("hello.txt").then(function(data) {
+    console.log("File contents is: "+data);
+}, function(err) {
+    console.log("Error opening file: "+err);
+});
+```
 
 The latter is typically useful if you have to invoke a function only once.
