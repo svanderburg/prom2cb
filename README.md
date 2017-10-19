@@ -1,3 +1,5 @@
+prom2cb
+=======
 An adapter library converting Node.js-style functions with callbacks into
 functions constructing promises and vice-versa.
 
@@ -128,3 +130,12 @@ prom2cb.promisify(Promise, fs.readFile)("hello.txt").then(function(data) {
 ```
 
 The latter is typically useful if you have to invoke a function only once.
+
+API documentation
+=================
+This package includes API documentation, which can be generated with
+[JSDoc](http://usejsdoc.org).
+
+License
+=======
+The contents of this package is available under the [MIT license](http://opensource.org/licenses/MIT)
